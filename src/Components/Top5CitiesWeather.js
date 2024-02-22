@@ -4,13 +4,11 @@ import { WeatherDataLabel } from "../Reusables/Button";
 import "../App.css";
 
 const Top5CitiesWeather = (props) => {
-  // Getting Top5CitiesWeather from WeatherDashboardWithAllProps
   const top5CitiesWeather = props.top5CitiesWeather;
   if (!top5CitiesWeather) {
     return <div>Loading...</div>;
   }
 
-  // Getting units from WeatherDashboardWithAllProps
   const { units } = props;
 
   return (

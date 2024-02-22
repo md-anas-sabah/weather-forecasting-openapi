@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import WeatherDashboardWithAllProps from "./Components/WeatherDashboard";
-import Footer from "./Components/Footer";
 import "./App.css";
 
 const App = () => {
@@ -36,7 +35,6 @@ const App = () => {
         isDarkMode={isDarkMode}
         setIsDarkMode={setIsDarkMode}
       />
-      <Footer isDarkMode={isDarkMode} />
     </>
   );
 };

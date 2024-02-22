@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Protest+Revolution&display=swap");
+
+.left-h1 {
+  font-family: "Protest Revolution", sans-serif;
+  font-weight: 400;
+}
+
+.dark_mode_buttons {
+  padding: 5px 12px;
+  border-radius: 100%;
+}

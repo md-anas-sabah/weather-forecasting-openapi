@@ -25,10 +25,8 @@ const WeatherDashboardWithAllProps = (props) => {
   const [isMetricActive, setIsMetricActive] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Passing dark mode state object as props
   const { isDarkMode, setIsDarkMode } = props;
 
-  // Toggle units on click
   const [units, switchUnits] = useState("C");
   const handleUnitChange = (units) => {
     switchUnits(units);
@@ -40,8 +38,6 @@ const WeatherDashboardWithAllProps = (props) => {
     }
   };
 
-  // -----------------------------------------------
-  // Some basic encapsulation for ciphering...
   function getSecretToken(randomToken) {
     let tokenWithoutRandomKey = randomToken.replace("random", "");
     let token = tokenWithoutRandomKey.split("").reverse().join("");
@@ -72,9 +68,8 @@ const WeatherDashboardWithAllProps = (props) => {
     } else if (zipCode) {
       apiUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&appid=${cipher}`;
     } else {
-      // Getting initial random city
       const randomCitiesListResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/find?lat=32.7&lon=-96.8&cnt=10&appid=${cipher}`
+        `https://api.openweathermap.org/data/2.5/find?lat=25.5941&lon=85.1376&cnt=10&appid=${cipher}`
       );
       const randomCities = await randomCitiesListResponse.json();
       const randomCity =
@@ -91,8 +86,6 @@ const WeatherDashboardWithAllProps = (props) => {
       }
       setIsLoading(false);
       setRandomCity(data);
-
-      // Instance of calculateWeatherMetrics with weather factors data
       let weatherMetrics = new calculateWeatherMetrics(
         data.list[0].visibility,
         data.list[0].main.temp,
@@ -101,15 +94,12 @@ const WeatherDashboardWithAllProps = (props) => {
         data.list[0].clouds.all
       );
 
-      // Setting wind direction
       const windDirection = weatherMetrics.getWindDirection();
       setWindDirection(windDirection);
 
-      // Setting visibility
       const visibility = weatherMetrics.getVisibility();
       setVisibility(visibility);
 
-      // Setting formatted sunrise, sunset and current time
       const sunriseTimestamp = data.city.sunrise;
       const sunsetTimestamp = data.city.sunset;
       const currentTimeStamp = weatherMetrics.getTime(new Date());
@@ -124,15 +114,12 @@ const WeatherDashboardWithAllProps = (props) => {
       setSunsetTime(sunsetTime.formattedTimeOnly);
       setCurrentTime(currentTimeStamp.currentDayAndTime);
 
-      // Setting cloudiness
       const cloudiness = weatherMetrics.getCloudiness();
       setCloudiness(cloudiness);
 
-      // Setting dew point
       const dewPoint = weatherMetrics.getDewPoint();
       setDewPoint(dewPoint);
 
-      // Setting pressure
       let pressureTextLabel;
       let pressureInHg = `${(
         data.list[0].main.pressure * 0.0295299830714
@@ -148,14 +135,12 @@ const WeatherDashboardWithAllProps = (props) => {
       };
       setPressure(pressureData);
 
-      // Setting heat index
       const heatIndexTemp = weatherMetrics.getHeatIndex(
         data.list[0].main.temp,
         data.list[0].main.humidity
       );
       setHeatIndex(heatIndexTemp);
 
-      // Fetching 5 nearby cities around the city searched by the user
       async function getNearByCities() {
         const lat = data.city.coord.lat;
         const lon = data.city.coord.lon;
@@ -169,8 +154,6 @@ const WeatherDashboardWithAllProps = (props) => {
           console.log("Error", error);
         }
       }
-
-      // Fetching data from Air Pollution API
       async function getAirPollutionData() {
         try {
           const lat = data.city.coord.lat;
@@ -180,7 +163,6 @@ const WeatherDashboardWithAllProps = (props) => {
           );
           const dataFromAirPollutionAPI = await response.json();
 
-          // Setting weather air quality index information
           const { aqiName, aqiError } = calculateAirQualityIndex(
             dataFromAirPollutionAPI.list[0].components.so2,
             dataFromAirPollutionAPI.list[0].components.no2,
@@ -210,7 +192,6 @@ const WeatherDashboardWithAllProps = (props) => {
     getLabelsColorChanged();
     /* eslint-disable */
   }, []);
-  // -----------------------------------------------
 
   return (
     <>

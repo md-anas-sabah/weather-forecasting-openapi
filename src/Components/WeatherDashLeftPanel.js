@@ -1,4 +1,5 @@
 import React from "react";
+import "./WeatherDashLeftPanel.css";
 import Top5CitiesWeather from "./Top5CitiesWeather";
 import Button, { WeatherDataLabel } from "../Reusables/Button";
 import { convertTemperature } from "../Reusables/Weather";
@@ -23,16 +24,18 @@ const WeatherDashLeftPanel = (props) => {
       <div className="weather_container_left_panel">
         <div className="weather_container_top_section d-block">
           <div className="weather_title_div">
-            <h1 style={{ fontWeight: 900 }}>Weather Dashboard</h1>
+            <h1 style={{ fontWeight: 900 }} className="left-h1 text-5xl">
+              Weather Dashboard
+            </h1>
             <Button
-              classNames="dark_mode_button"
+              classNames="p-2"
               onClick={() => setIsDarkMode(!isDarkMode)}
               buttonInnerText={isDarkMode ? "Light Mode" : "Dark Mode"}
             />
           </div>
           <div className="weather_props_units_button_div">
             <Button
-              classNames="metrics_unit_button"
+              classNames="metrics_unit_button "
               style={{ opacity: `${isMetricActive ? "0.5" : "1"}` }}
               onClick={() => handleUnitChange("C")}
               buttonInnerText="Metric"
@@ -52,6 +55,9 @@ const WeatherDashLeftPanel = (props) => {
             buttonInnerText={currentTime}
           />
           <input
+            className={`w-96 h-10 ${
+              isDarkMode ? "text-black" : null
+            } px-2 rounded-2xl outline-none mt-2`}
             type="text"
             placeholder="Search for city"
             value={cityInputTerm}
@@ -146,12 +152,10 @@ const WeatherDashLeftPanel = (props) => {
           />
         </div>
 
-        {/* Top 5 near by cities component */}
         <Top5CitiesWeather
           top5CitiesWeather={top5CitiesWeather}
           units={units}
         />
-        {/* END of Top 5 near by cities component */}
       </div>
     </>
   );

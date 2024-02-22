@@ -1,5 +1,3 @@
-/* ------------------------------------------------------------------------ */
-// Calculate visibility, dew point, heat index, air quality index...
 export class calculateWeatherMetrics {
   constructor(visibility, temperature, humidity, windDegree, cloudiness) {
     this.visibility = visibility;
@@ -28,7 +26,6 @@ export class calculateWeatherMetrics {
     return { visibilityInKilometers, visibilityInMiles, visibilityTextLabel };
   };
 
-  // Magnus-Tetens approximation, which is widely used to calculate dew point.
   getDewPoint = () => {
     const a = 17.27;
     const b = 237.7;
@@ -64,7 +61,6 @@ export class calculateWeatherMetrics {
     return { alertText, heatIndex: heatIndex.toFixed(2) };
   };
 
-  // Wind direction to text words
   getWindDirection = () => {
     const windDirText =
       this.windDegree >= 337.5 || this.windDegree < 22.5
@@ -86,8 +82,6 @@ export class calculateWeatherMetrics {
         : "";
     return windDirText;
   };
-
-  // Convert Unix timestamp to JavaScript Date object
   getTime = (time) => {
     let hours = time.getHours();
     let minutes = time.getMinutes();
@@ -99,7 +93,6 @@ export class calculateWeatherMetrics {
       .toString()
       .padStart(2, "0")} ${amOrPm}`;
 
-    // array of weekday names
     const weekdays = [
       "Sunday",
       "Monday",
@@ -109,7 +102,6 @@ export class calculateWeatherMetrics {
       "Friday",
       "Saturday",
     ];
-    // Getting the current day of the week
     const dayOfWeek = weekdays[time.getDay()];
     const currentDayAndTime = `${dayOfWeek}, ${hours}:${minutes} ${amOrPm} CST`;
     return {
@@ -133,10 +125,7 @@ export class calculateWeatherMetrics {
     return { cloudiness: `${cloudiness}%.`, cloudinessTextLabel };
   };
 }
-// };
-/* ------------------------------------------------------------------------ */
 
-// Change label color
 export const getLabelsColorChanged = () => {
   const labels = document.querySelectorAll(".label");
   labels.forEach((label) => {
@@ -153,7 +142,6 @@ export const getLabelsColorChanged = () => {
   });
 };
 
-// Calculate air quality index
 export function calculateAirQualityIndex(so2, no2, pm10, pm2_5, o3, co) {
   const AQI_CATEGORIES = [
     {
@@ -203,7 +191,6 @@ export function calculateAirQualityIndex(so2, no2, pm10, pm2_5, o3, co) {
     },
   ];
 
-  // Check which AQI category the pollutant concentrations fall into
   let aqiName;
   let aqiError;
   for (const category of AQI_CATEGORIES) {
@@ -229,7 +216,6 @@ export function calculateAirQualityIndex(so2, no2, pm10, pm2_5, o3, co) {
   return { aqiName, aqiError };
 }
 
-// Convert temperature from celsius to fahrenheit or vice versa
 export const convertTemperature = (temperature) => {
   let tempInCelsius = ((temperature - 32) / 1.8).toFixed(2);
   let tempInFahrenheit = (temperature * 1.8 + 32).toFixed(2);
@@ -239,7 +225,6 @@ export const convertTemperature = (temperature) => {
   };
 };
 
-// Convert speed from mph to kph or vice versa
 export const convertSpeed = (speed) => {
   let speedInKilometers = (parseFloat(speed) * 1.609).toFixed(2);
   let speedInMiles = (parseFloat(speed) / 1.609).toFixed(2);
